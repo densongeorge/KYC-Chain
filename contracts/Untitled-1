@@ -1,0 +1,13 @@
+truffle migrate --compile-all --reset --network ganache
+
+remove bank id from everywhere . bank name is it self the id for now.
+//validation for user already exist in the system is pending
+
+date format in front end in update kyc and get user details for user and bank
+isvalid user not working
+
+isbank in getuserforbank
+
+verification part
+
+verify bank function content change
