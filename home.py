@@ -17,6 +17,7 @@ import random
 import string
 
 
+
 SCOPES = 'https://www.googleapis.com/auth/gmail.send'
 CLIENT_SECRET_FILE = 'credentials.json'
 APPLICATION_NAME = 'Gmail API Python Send Email'
