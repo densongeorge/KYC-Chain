@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>KYC Chain</title>
+
+  <!-- Bootstrap -->
+  <!-- <link href="/css/bootstrap.min.css" rel="stylesheet"> -->
+  <link href="{{ url_for('static',filename='bootstrap.min.css')}}" rel="stylesheet">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Application -->
+  <!-- <link href="/css/app.css" rel="stylesheet"> -->
+  <link href="{{url_for('static',filename='app.css')}}" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron text-center">
+      <h1>KYC Chain</h1>
+    </div>
+
+    <div class="col-md-12" id="article-list">
+      <div class="row">
+        <div class="col-lg-12">
+          <p id="account" class="welcome pull-right"></p>
+          <p id="accountBalance" class="welcome pull-left"></p>
+        </div>
+      </div>
+
+      <div class="row panel panel-default">
+        <div class="panel-heading clearfix">
+          <div class="panel-title">
+            <button class="btn btn-info btn-lg pull-left" data-toggle="modal" data-target="#getUserAccount">User KYC</button>
+            <button class="btn btn-info btn-lg pull-right" data-toggle="modal" data-target="#userRegister">Register User</button>
+          </div>
+        </div>
+        <ul id="events" class="collapse list-group"></ul>
+      </div>
+
+      <div id="articlesRow" class="row">
+        <!-- ARTICLES LOAD HERE -->
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <div id="UserDetailsForBank" style="display: none;">
+    <div class="row-lg-12">
+      <div class="panel panel-default panel-article">
+        <div class="panel-heading">
+          <h3 class="panel-title"></h3>
+          <strong>Account Address</strong>: <span class="userAccountAddress"></span><br/>
+        </div>
+        <div class="panel-body">
+          <strong>First Name</strong>: <span class="first_name"></span><br/>
+          <strong>Last Name</strong>: <span class="last_name"></span><br/>
+          <strong>Aadhar Number</strong>: <span class="Aadhar_no"></span><br/>
+          <strong>Date Of Birth</strong>: <span class="dob"></span><br/>
+          <strong>Mobile No</strong>: <span class="mobile_no"></span><br/>
+          <strong>Email Address</strong>: <span class="email_address"></span><br/>
+        </div>
+        <div class = "panel-footer">
+          <button type = "button" class = "btn btn-primary btn-success btn-buy" data-toggle="modal" data-target="#updateUserDetails" onclick = "updateKYC(); return false;">Update KYC</button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal form to sell an article -->
+  <div class="modal fade" id="userRegister" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Enter User Details</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-lg-12">
+              <form>
+                <div class="form-group">
+                    <div class="col-lg-6">
+                        <label for="First Name">First Name</label>
+                        <input type="text" class="form-control" id="first_name" placeholder="First Name" value = "Anand" required>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="First Name">Last Name</label>
+                        <input type="text" class="form-control" id="last_name" placeholder="Last Name" value = "Wani" required>
+                    </div>
+                </div>
+                <div>
+                    <label for="blank"></label>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-6">
+                        <label for="Bank_Email">Email Address</label>
+                        <input type="text" class="form-control" id="user_email" value = "h20180133@pilani.bits-pilani.ac.in" placeholder="Enter your Email Id"  required>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="Mobile">Mobile Number</label>
+                        <input type="number" class="form-control" id="user_mobile" value = "9874562146" placeholder="Enter your Mobile Number"  required>
+                    </div>
+                </div>
+                <div>
+                    <label for="blank"></label>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-6">
+                        <label for="AadharNo">Aadhar Number</label>
+                        <input type="number" class="form-control" id="aadharNo" value = "00000000000000" placeholder="Enter your Aadhar No"  required>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="dob">Date Of Birth</label>
+                        <input type="date" class="form-control" id="dob" value = "2019-01-01" placeholder="Enter your Date Of Birth"  required>
+                    </div>
+                </div>
+                <div>
+                  <label for="blank"></label>
+              </div>
+                <!-- <div class="form-group">
+                  <div class="col-lg-12">
+                      <label for="Bank_Private_key">Bank Private Key</label>
+                      <input type="password" class="form-control" id="privateKey" value = "00000000000000" placeholder="Enter your Private Key"  required>
+                  </div>
+              </div> -->
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-success" data-dismiss="modal" onclick= "registerUser(); return false;">Submit</button>
+          <button type="button" class="btn" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="getUserAccount" role="dialog" hidden = true>
+    <div class="modal-dialog">    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">User Details</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <form>
+                <div class="form-group">
+                    <label for="User Account Address">User Account Address</label>
+                    <input type="text" class="form-control" id="accountAddress" placeholder="Enter User Account Address" required>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-success"  data-dismiss="modal" onclick= "getUserDetailsForBank(); return false;">Submit</button>
+          <button type="button" class="btn" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  
+  <div class="modal fade" id="updateUserDetails" role="dialog" hidden = true>
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">User Details</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-lg-12">
+              <form>
+                <div class="form-group">
+                    <div class="col-lg-6">
+                        <label for="First Name">First Name</label>
+                        <input type="text" class="form-control" id="_first_name" placeholder="First Name" >
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="First Name">Last Name</label>
+                        <input type="text" class="form-control" id="_last_name" placeholder="Last Name" >
+                    </div>
+                </div>
+                <div>
+                    <label for="blank"></label>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-6">
+                        <label for="Bank_Email">Email Address</label>
+                        <input type="text" class="form-control" id="_user_email" placeholder="Enter your Email Id" >
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="Mobile">Mobile Number</label>
+                        <input type="number" class="form-control" id="_user_mobile" placeholder="Enter your Mobile Number"  >
+                    </div>
+                </div>
+                <div>
+                    <label for="blank"></label>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-6">
+                        <label for="AadharNo">Aadhar Number</label>
+                        <input type="number" class="form-control" id="_aadharNo"  placeholder="Enter your Aadhar No"  readonly>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="dob">Date Of Birth</label>
+                        <input type="date" class="form-control" id="_dob" placeholder="Enter your Date Of Birth"  >
+                    </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <label for="verification status" id = "_status"></label>
+          <button type="button" class="btn btn-primary btn-success" data-dismiss="modal" onclick= "updateUserKYCDetails(); return false;">Update</button>
+          <button type="button" class="btn" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <div id="footer" class="container">
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+      <div class="navbar-inner navbar-content-center text-center">
+        <p class="text-muted" credit><a href="https://github.com">KYC Chain</a> - &copy; 2019 - <a href="https://github.com/densongeorge">Denson George</a> and <a href="https://github.com/anand1996wani">Anand Wani</a></p>
+      </div>
+    </nav>
+  </div>
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <!-- <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/web3.min.js"></script>
+  <script src="/js/truffle-contract.js"></script>
+  <script src="/js/app.js"></script> -->
+  <script src="{{url_for('static',filename='bootstrap.min.js')}}"></script>
+  <script src="{{url_for('static',filename='web3.min.js')}}"></script>
+  <script src="{{url_for('static',filename='app.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+  <!-- <script src="{{url_for('static',filename='truffle-contract.js')}}"></script>
+   -->
+</body>
+
+</html>
